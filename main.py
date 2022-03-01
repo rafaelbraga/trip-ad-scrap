@@ -11,10 +11,6 @@ chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 #chrome_options.add_argument('--disable-dev-shm-usage')
 
-# .\env\Scripts\activate
-# pip install -r requirements.txt
-# pip freeze > requirements.txt  # Python2
-
 def verifyFirstAccess(wd):
     sleep(3)
     try:
