@@ -7,10 +7,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 path_to_file = "/Users/igorrivero/Trip_Advisor_Reviews/Restaurants_Review.csv"
 
-pages_to_scrape = 100
+pages_to_scrape = 999999
 #1506
 url = "https://www.tripadvisor.com.br/Restaurant_Review-g303293-d1098021-Reviews-Coco_Bambu_Frutos_do_Mar-Fortaleza_State_of_Ceara.html"
-
+#url = "https://www.tripadvisor.com.br/Restaurant_Review-g303293-d10150986-Reviews-or600-Vignoli_Sul_Fortaleza-Fortaleza_State_of_Ceara.html"
 
 
 # import the webdriver
@@ -36,21 +36,25 @@ for i in range(0, pages_to_scrape):
     time.sleep(2) 
 
  #   # Click the "expand review" link to reveal the entire review.
+   
  #   expand_review = driver.find_element_by_xpath("//span[@class='taLnk ulBlueLinks']")
-
- #   if expand_review: 
+ #   if len(expand_review) > 0:
  #       expand_review.click()
-    
+
+    try:
+        driver.find_element_by_xpath("//span[@class='taLnk ulBlueLinks']").click()
+    except:
+        print("Do Nothing")
 
     # Now we'll ask Selenium to look for elements in the page and save them to a variable. First lets define a  container that will hold all the reviews on the page. In a moment we'll parse these and save them:
     container = driver.find_elements_by_xpath(".//div[@class='review-container']")
-    print(len(container))
+    #print(len(container))
 
 
 
     # Next we'll grab the date of the review:
     #dates = driver.find_elements_by_xpath(".//div[@class='_2fxQ4TOx']")
-    print(i)
+    print(f"Page Number {i}")
     #print(dates)
    # Now we'll look at the reviews in the container and parse them out
 
@@ -66,10 +70,14 @@ for i in range(0, pages_to_scrape):
         
     # When all the reviews in the container have been processed, change the page and repeat            
     time.sleep(2) 
-    next_button = driver.find_element_by_css_selector("#REVIEWS a.nav.next").click()
+    try:
+        next_button = driver.find_element_by_css_selector("#REVIEWS a.nav.next").click()
+    except:
+        print(f"FINISH AT PAGE NUMBER {i}!!!")
+        break
     #elements_button = WebDriverWait(driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//*[@class='nav next ui_button primary']")))
     #elements_button[0].click()
-
+    
 #
 
 # When all pages have been processed, quit the driver
